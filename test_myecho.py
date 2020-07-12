@@ -2,7 +2,7 @@ import random
 import string
 import pytest
 
-from myecho import myecho, parse_args
+from myecho import myecho, parse_args, ESCAPE_CHARS
 
 
 def test__echo__with_no_args__returns_newline(capsys):
@@ -30,16 +30,29 @@ def test__echo__with_n__strips_newline(capsys):
         assert arg in captured.out
 
 
-def test__echo__with_escape_chars(capsys):
-    parsed_args = parse_args(["-e", "yeet", "\\t"])
+def test__echo__with_e_flag__escapes_chars(capsys):
+    args = ["-e", "yeet"]
+    args += ESCAPE_CHARS.keys()
+    parsed_args = parse_args(args)
 
     myecho(parsed_args)
 
     captured = capsys.readouterr()
     assert "yeet" in captured.out
-    assert "\t" in captured.out
-    assert "\\t" not in captured.out
+    for escape_char, escaped_char in ESCAPE_CHARS.items():
+        assert escape_char not in captured.out
+        assert escaped_char in captured.out
 
 
-def test__echo__with_escape_chars_and_e_on(capsys):
-    assert False
+def test__echo__default__doesnt_escape_chars(capsys):
+    args = ["-n", "yeet"]
+    args += ESCAPE_CHARS.keys()
+    parsed_args = parse_args(args)
+
+    myecho(parsed_args)
+
+    captured = capsys.readouterr()
+    assert "yeet" in captured.out
+    for escape_char, escaped_char in ESCAPE_CHARS.items():
+        assert escape_char in captured.out
+        assert " " + escaped_char + " " not in captured.out
