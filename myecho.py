@@ -1,5 +1,6 @@
 #! /usr/local/bin/python3
 
+import sys
 import argparse
 
 ESCAPE_CHARS = {
@@ -13,7 +14,7 @@ ESCAPE_CHARS = {
 }
 
 
-def myecho():
+def parse_args(args):
     parser = argparse.ArgumentParser(
         prog="myecho",
         description="my implementation of echo. writes any number of operands separated by single blank space characters and followed by a newline to stdout",
@@ -38,8 +39,11 @@ def myecho():
         help="any number of other words",
         nargs="*"
     )
+    return parser.parse_args(args)
 
-    args = parser.parse_args()
+
+def myecho():
+    args = parse_args(sys.argv[1:])
     print_end = "" if args.n else "\n"
 
     output = ""
