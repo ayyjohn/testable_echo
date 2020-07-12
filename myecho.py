@@ -14,7 +14,6 @@ ESCAPE_CHARS = {
 
 
 def myecho():
-
     parser = argparse.ArgumentParser(
         prog="myecho",
         description="my implementation of echo. writes any number of operands separated by single blank space characters and followed by a newline to stdout",
