@@ -42,13 +42,13 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def myecho(args):
-    print_end = "" if args.n else "\n"
+def myecho(parsed_args):
+    print_end = "" if parsed_args.n else "\n"
 
     output = ""
-    for arg in args.ARGS:
+    for arg in parsed_args.ARGS:
         if arg in ESCAPE_CHARS:
-            output += ESCAPE_CHARS[arg] if args.e else arg
+            output += ESCAPE_CHARS[arg] if parsed_args.e else arg
         else:
             output += arg
         output += " "
