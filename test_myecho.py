@@ -31,7 +31,14 @@ def test__echo__with_n__strips_newline(capsys):
 
 
 def test__echo__with_escape_chars(capsys):
-    assert False
+    parsed_args = parse_args(["-e", "yeet", "\\t"])
+
+    myecho(parsed_args)
+
+    captured = capsys.readouterr()
+    assert "yeet" in captured.out
+    assert "\t" in captured.out
+    assert "\\t" not in captured.out
 
 
 def test__echo__with_escape_chars_and_e_on(capsys):
