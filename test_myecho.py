@@ -3,7 +3,11 @@ from myecho import myecho, parse_args
 
 
 def test__echo__with_no_args__returns_newline(capsys):
-    assert False
+    parsed_args = parse_args([])
+    myecho(parsed_args)
+    captured = capsys.readouterr()
+
+    assert captured.out == "\n"
 
 
 def test__echo__with_newline():
