@@ -42,8 +42,7 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def myecho():
-    args = parse_args(sys.argv[1:])
+def myecho(args):
     print_end = "" if args.n else "\n"
 
     output = ""
@@ -58,4 +57,5 @@ def myecho():
 
 
 if __name__ == "__main__":
-    myecho()
+    args = parse_args(sys.argv[1:])
+    myecho(args)
